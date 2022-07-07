@@ -1,0 +1,13 @@
+<Configuration>
+    <MappedFolders>
+        <MappedFolder>
+            <HostFolder>X:\wixsandbox</HostFolder>
+            <SandboxFolder>C:\wixsandbox</SandboxFolder>
+            <ReadOnly>false</ReadOnly>
+        </MappedFolder>
+    </MappedFolders>
+    <MemoryInMB>8192</MemoryInMB>
+    <LogonCommand>
+      <Command>C:\wixsandbox\_prepSandboxAndRunTests.cmd</Command>
+    </LogonCommand>
+</Configuration>
