@@ -1,9 +1,9 @@
 pushd %~dp0
 
-::// Install the latest .NET SDK in this directory.
+::// Install the latest .NET SDK.
 :://
 set s="Did not find .NET SDK"
-for /f %%i in ('dir /od /b dotnet-sdk*.exe') do set s=%%i
+for /f %%i in ('dir /od /s /b dotnet-sdk*.exe') do set s=%%i
 %s% /passive /install /norestart
 
 ::// Need to manually add `dotnet` to the path, as the installer
@@ -11,14 +11,20 @@ for /f %%i in ('dir /od /b dotnet-sdk*.exe') do set s=%%i
 :://
 set PATH=C:\Program Files\dotnet\;%PATH%
 
+::// Install the latest .NET desktop runtime.
+:://
+set s="Did not find .NET desktop runtime"
+for /f %%i in ('dir /od /s /b windowsdesktop-runtime*.exe') do set s=%%i
+%s% /passive /install /norestart
+
 ::// Run the tests we copied before launching the Sandbox.
 :://
 pushd IntegrationBurn
-start /wait %COMSPEC% /c runtests.cmd
+start /wait %COMSPEC% /c runtests.cmd > runtests.log
 popd
 
 pushd IntegrationMsi
-start /wait %COMSPEC% /c runtests.cmd
+start /wait %COMSPEC% /c runtests.cmd > runtests.log
 popd
 
 ::// In an ideal world, this would cleanly shut down the Sandbox VM.
